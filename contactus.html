@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | EdMo Elite Property Care</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="contactus.css">
+    <script src="main.js" type="module" defer></script>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="./Assets/logo.png" alt="logo of the company">
+            <h1 class="title">EdMo</h1>
+        </div>
+        <nav>
+            <ion-icon name="close-outline" class="nav-close"></ion-icon>
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="#">Portfolio</a>
+            <a href="about.html">About Us</a>
+            <button>Get a free quote</button>
+        </nav>
+        <ion-icon name="menu-outline"></ion-icon>
+    </header>
+
+    <div id="contact-body">
+
+        <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+        <section class="contact-hero">
+            <p class="eyebrow">Get In Touch</p>
+            <h1>Let's Talk About<br>Your <span>Next Project.</span></h1>
+            <p>
+                Have a roofing concern, a remodel in mind, or just need a second opinion?
+                Reach out — we respond to every inquiry, usually within one business day.
+            </p>
+        </section>
+
+        <!-- ── Main: info + form ──────────────────────────────────────────────── -->
+        <div class="contact-main">
+
+            <!-- LEFT: contact info, socials, map -->
+            <div class="contact-info">
+
+                <!-- Direct contacts -->
+                <div class="info-block">
+                    <span class="info-label">Reach Us Directly</span>
+                    <div class="contact-cards">
+                        <a href="tel:+254000000000" class="contact-card">
+                            <div class="cc-icon">
+                                <ion-icon name="call-outline"></ion-icon>
+                            </div>
+                            <div class="cc-detail">
+                                <span>Phone</span>
+                                <span>+254 00 000 000</span>
+                            </div>
+                        </a>
+                        <a href="mailto:example@email.com" class="contact-card">
+                            <div class="cc-icon">
+                                <ion-icon name="mail-outline"></ion-icon>
+                            </div>
+                            <div class="cc-detail">
+                                <span>Email</span>
+                                <span>example@email.com</span>
+                            </div>
+                        </a>
+                        <a href="#" class="contact-card">
+                            <div class="cc-icon">
+                                <ion-icon name="logo-whatsapp"></ion-icon>
+                            </div>
+                            <div class="cc-detail">
+                                <span>WhatsApp</span>
+                                <span>Message us anytime</span>
+                            </div>
+                        </a>
+                        <div class="contact-card" style="cursor:default;">
+                            <div class="cc-icon">
+                                <ion-icon name="location-outline"></ion-icon>
+                            </div>
+                            <div class="cc-detail">
+                                <span>Based In</span>
+                                <span>Marietta, Georgia</span>
+                            </div>
+                        </div>
+                        <div class="contact-card" style="cursor:default;">
+                            <div class="cc-icon">
+                                <ion-icon name="time-outline"></ion-icon>
+                            </div>
+                            <div class="cc-detail">
+                                <span>Business Hours</span>
+                                <span>Mon – Sat, 7 AM – 6 PM</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social media -->
+                <div class="info-block">
+                    <span class="info-label">Follow Us</span>
+                    <div class="social-row">
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-instagram"></ion-icon>
+                            Instagram
+                        </a>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-facebook"></ion-icon>
+                            Facebook
+                        </a>
+                        <a href="#" class="social-link">
+                            <ion-icon name="logo-whatsapp"></ion-icon>
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Map -->
+                <div class="info-block contact-map">
+                    <span class="info-label">Service Area</span>
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d212359.0!2d-84.5499!3d33.9526!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x88f51ef37c63b6ad%3A0x4e3af15e42e7cb53!2sMarietta%2C%20GA!5e0!3m2!1sen!2sus!4v1"
+                        allowfullscreen=""
+                        loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        title="EdMo service area — Marietta, Georgia">
+                    </iframe>
+                    <p class="map-caption">
+                        Based in Marietta, GA &mdash; proudly serving the greater Atlanta metro,
+                        northwest Georgia, and across Tennessee including Chattanooga and Nashville.
+                    </p>
+                </div>
+
+            </div>
+
+            <!-- RIGHT: inquiry form -->
+            <div class="contact-form-col">
+                <div class="form-header">
+                    <span class="info-label">Send a Message</span>
+                    <h2>Request a Free Quote</h2>
+                    <p>
+                        Fill in the details below and one of our team members will get back
+                        to you with a no-obligation estimate.
+                    </p>
+                </div>
+
+                <form id="contact-form" action="" novalidate>
+                    <div class="form-row">
+                        <div class="input-group">
+                            <label for="first-name">First Name</label>
+                            <input type="text" id="first-name" name="first-name" placeholder="John" required>
+                        </div>
+                        <div class="input-group">
+                            <label for="last-name">Last Name</label>
+                            <input type="text" id="last-name" name="last-name" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" placeholder="example@email.com" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" placeholder="+1 (555) 000-0000">
+                    </div>
+
+                    <div class="input-group">
+                        <label for="service">Service Interested In</label>
+                        <select id="service" name="service">
+                            <option value="" disabled selected>Select a service...</option>
+                            <optgroup label="Exterior Building Envelopes &amp; Protection">
+                                <option>High-Performance Roofing Systems</option>
+                                <option>Precision Painting &amp; Surface Coating</option>
+                                <option>Specialized Stucco &amp; Plastering</option>
+                                <option>Structural Wood Restoration</option>
+                                <option>Durable Siding Installation</option>
+                            </optgroup>
+                            <optgroup label="Interior Renovations &amp; Finishes">
+                                <option>Bespoke Bathroom Remodeling</option>
+                                <option>Premium Wood Flooring</option>
+                                <option>Precision Surface &amp; Stair Tiling</option>
+                            </optgroup>
+                            <optgroup label="Outdoor Living &amp; Hardscapes">
+                                <option>Custom Decking &amp; Outdoor Structures</option>
+                                <option>Artisanal Masonry &amp; Brickwork</option>
+                                <option>Hardscape Concrete Solutions</option>
+                            </optgroup>
+                            <option value="other">Other / Not Sure Yet</option>
+                        </select>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="message">Tell Us More</label>
+                        <textarea id="message" name="message" placeholder="Describe your project, any concerns, or questions you have..."></textarea>
+                    </div>
+
+                    <button type="submit" id="send-inquiry">Send Message</button>
+                    <div class="form-success" id="form-success">
+                        &#10003; Message sent! We'll be in touch within one business day.
+                    </div>
+                </form>
+            </div>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <div class="info">
+            <img src="./Assets/Logo_bg_black.png" alt="Edmo white logo with black background">
+            <p>&#169;2026 Copyright EdMo Elite Property Care, LLC</p>
+        </div>
+        <hr>
+        <div class="quick-links">
+            <h2>Quick Links</h2>
+            <div class="links">
+                <a href="#">Back to top</a>
+                <a href="services.html">Services</a>
+                <a href="#">Portfolio</a>
+                <a href="contactus.html">Contact Us</a>
+                <a href="about.html">About Us</a>
+            </div>
+        </div>
+        <hr>
+        <div class="contacts">
+            <h2>Contacts</h2>
+            <div class="links">
+                <a href="mailto:example@email.com">
+                    <ion-icon name="mail-outline"></ion-icon>example@email.com
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-whatsapp"></ion-icon>Whatsapp
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>Instagram
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-facebook"></ion-icon>Facebook
+                </a>
+                <a href="tel:+254000000000">
+                    <ion-icon name="call-outline"></ion-icon>+254 00 000 000
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script>
+        // Simple form submit feedback (no backend yet)
+        document.getElementById("contact-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            const success = document.getElementById("form-success");
+            success.style.display = "block";
+            this.reset();
+            success.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+    </script>
+</body>
+</html>
