@@ -16,7 +16,7 @@
     --primary-font: ;
 }
 
-/* animeations */
+/* animations */
 
 @keyframes throb {
     0%{
@@ -36,11 +36,44 @@
     }
 }
 
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(12px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeSlideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-16px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+}
+
 *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     transition: .6s;
+}
+
+/* Body layout properties must never transition — animating position/overflow
+   during lockScroll/unlockScroll causes scroll-position jumps on desktop */
+body {
+    transition: none;
 }
 
 a, p, label, input, button, textarea{
@@ -67,6 +100,13 @@ body{
     background-attachment: fixed;
 }
 
+/* header hidden state when services section is active */
+header.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-20px);
+}
+
 
 header{
     display: flex;
@@ -88,7 +128,6 @@ header nav{
     gap: 1rem;
     border: 1px solid rgb(175, 175, 175);
     padding: 8px;
-    /* border-radius: 8px; */
     backdrop-filter: blur(10px);
 }
 
@@ -103,7 +142,6 @@ header nav a:hover{
 header nav button{
     font-weight: bold;
     padding: 10px;
-    /* border-radius: 6px; */
     border: none;
     background: black;
     color: var(--secondary-font-color);
@@ -200,83 +238,344 @@ section{
     z-index: 1;
     opacity: 0;
     animation: throb ease-in 2s 4;
-
 }
-
 
 .cta a:last-child{
     background: var(--secondary-font-color);
     color: var(--accent-color);
 }
 
-/* services section */
+/* ─── services section ─────────────────────────────────────────────────────── */
 
-.services{
-    padding: 10px;
-}
-
-.scroll{
+.services {
+    padding: 16px 16px 12px;
+    position: relative;
+    height: 100vh;
     display: flex;
-    height: 100%;
+    flex-direction: column;
+}
+
+.services h2 {
+    margin-bottom: 12px;
+    letter-spacing: 0.02em;
+    flex-shrink: 0;
+}
+
+.scroll {
+    display: flex;
     flex: 1;
+    gap: 16px;
+    min-height: 0;
 }
 
-.overview{
-    padding: 10px;
-    width: 35%;
+/* LEFT: overview panel */
+
+.overview {
+    width: 55%;
+    flex-shrink: 0;
 }
 
-.list{
-    padding: 10px;
-}
-
-.view{
-    background: url("https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=1200");
+.view {
+    height: 100%;
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
-    height: 100%;
+    position: relative;
+    overflow: hidden;
+    transition: background-image 0.5s ease;
 }
 
-.horizontal-card{
-    border: 1px solid var(--secondary-font-color);
-    padding: 5px;
-    background: var(--primary-bg);
-    margin-top: 10px;
-    margin-bottom: 20px;
-    cursor: pointer;
+.view::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,0.82) 0%,
+        rgba(0,0,0,0.35) 50%,
+        rgba(0,0,0,0.08) 100%
+    );
+    z-index: 1;
 }
 
-.down{
-    margin-block: 10px;
-    scale: .99;
+.view-content {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 28px 24px;
+    z-index: 2;
+    animation: fadeInUp 0.4s ease both;
 }
 
-.up{
-    scale: .95;
+.service-num {
+    font-family: var(--heading-font);
+    font-size: 3.5rem;
+    font-weight: 700;
+    color: var(--secondary-font-color);
+    line-height: 1;
+    opacity: 0.7;
+    display: block;
+    margin-bottom: 4px;
 }
 
-.up:hover, .down:hover{
-    scale: 1;
+.view-content h1 {
+    font-size: 1.75rem;
+    color: var(--primary-font-color-inverted);
+    line-height: 1.2;
+    margin-bottom: 10px;
+    font-weight: 600;
 }
 
-.selected{
-    outline: 2px solid var(--secondary-font-color);
-    box-shadow: 0 0 1rem 1rem var(--shadow-color);
-}
-
-.cat{
+.view-content .cat {
     background: var(--secondary-font-color);
-    width: 150px;
-    padding: 5px;
+    width: fit-content;
+    padding: 4px 14px;
     color: var(--primary-font-color-inverted);
     border-radius: 100px;
-    opacity: .5;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.9;
+    margin-bottom: 12px;
 }
 
-/* portfolio */
+.view-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-family: "Raleway", sans-serif;
+    max-width: 480px;
+}
 
-/* inquiry form */
+/* RIGHT: list column */
+
+.list-column {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    overflow: hidden;
+    min-width: 0;
+}
+
+.list {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0;
+    overflow: hidden;
+}
+
+.horizontal-card {
+    border: 1px solid var(--secondary-font-color);
+    padding: 12px 14px;
+    background: var(--primary-bg);
+    cursor: pointer;
+    overflow: hidden;
+
+    /* single-line clipping on all text children */
+    display: grid;
+    grid-template-rows: auto auto auto;
+    gap: 4px;
+    transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1),
+                opacity 0.35s ease,
+                box-shadow 0.35s ease,
+                border-color 0.35s ease;
+}
+
+/* text overflow to ellipsis for non-selected cards */
+.horizontal-card h1,
+.horizontal-card p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: block;
+}
+
+.horizontal-card h1 {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.horizontal-card .cat {
+    background: var(--secondary-font-color);
+    width: fit-content;
+    max-width: 100%;
+    padding: 2px 10px;
+    color: var(--primary-font-color-inverted);
+    border-radius: 100px;
+    font-size: 0.7rem;
+    opacity: 0.55;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.horizontal-card p:not(.cat) {
+    font-size: 0.82rem;
+    color: #555;
+    line-height: 1.4;
+}
+
+/* Far away cards — barely visible */
+.horizontal-card.far-up,
+.horizontal-card.far-down {
+    transform: scaleX(0.88) scaleY(0.85);
+    opacity: 0.25;
+    pointer-events: none;
+}
+
+/* Adjacent cards */
+.horizontal-card.up {
+    transform: scaleX(0.95) scaleY(0.9);
+    opacity: 0.55;
+    border-color: rgba(254, 111, 94, 0.35);
+}
+
+.horizontal-card.down {
+    transform: scaleX(0.97) scaleY(0.93);
+    opacity: 0.65;
+    border-color: rgba(254, 111, 94, 0.45);
+}
+
+.horizontal-card.up:hover {
+    transform: scaleX(0.98) scaleY(0.95);
+    opacity: 0.75;
+}
+
+.horizontal-card.down:hover {
+    transform: scaleX(0.99) scaleY(0.97);
+    opacity: 0.8;
+}
+
+/* Selected card */
+.horizontal-card.selected {
+    outline: 2px solid var(--secondary-font-color);
+    box-shadow: 0 4px 24px 0 rgba(254, 111, 94, 0.18), 0 0 0 4px rgba(254, 111, 94, 0.06);
+    transform: scaleX(1) scaleY(1);
+    opacity: 1;
+    border-color: var(--secondary-font-color);
+    background: linear-gradient(to right, rgba(254,111,94,0.05), transparent);
+    z-index: 2;
+    position: relative;
+}
+
+/* On selected card, allow description to wrap (show more) */
+.horizontal-card.selected p:not(.cat) {
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.horizontal-card.ghost {
+    border: none;
+    background: transparent;
+    pointer-events: none;
+    min-height: 40px;
+    opacity: 0;
+}
+
+/* scroll hint */
+.scroll-hint {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: rgba(0,0,0,0.4);
+    font-size: 0.78rem;
+    font-family: "Raleway", sans-serif;
+    margin-top: 8px;
+    padding-left: 2px;
+    user-select: none;
+    flex-shrink: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+}
+
+.scroll-hint.visible {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.scroll-hint ion-icon {
+    font-size: 16px;
+    animation: bounce 1.4s ease-in-out infinite;
+}
+
+.scroll-hint ion-icon:first-child {
+    animation-delay: 0.2s;
+}
+
+/* CTA card — lives inside .list as the final slot */
+.horizontal-card.cta-card {
+    height: 50px;
+    min-height: 50px;
+    border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    position: relative;
+    cursor: default;
+    gap: 8px;
+}
+
+.horizontal-card.cta-card::before {
+    content: '';
+    position: absolute;
+    inset: -5px;
+    border: 2px solid var(--secondary-font-color);
+    opacity: 0;
+    animation: throb ease-in 2s infinite;
+    pointer-events: none;
+}
+
+/* Both buttons share base styles */
+.horizontal-card.cta-card a {
+    flex: 1;
+    height: 100%;
+    font-weight: bold;
+    font-family: "Raleway", sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Filled: Call Us Now */
+.horizontal-card.cta-card a.call {
+    background: var(--secondary-font-color);
+    color: var(--primary-font-color-inverted);
+    border: 2px solid var(--secondary-font-color);
+}
+
+.horizontal-card.cta-card a.call:hover {
+    background: transparent;
+    color: var(--secondary-font-color);
+}
+
+/* Outlined: View All Services */
+.horizontal-card.cta-card a.services-link {
+    background: transparent;
+    color: var(--secondary-font-color);
+    border: 2px solid var(--secondary-font-color);
+}
+
+.horizontal-card.cta-card a.services-link:hover {
+    background: var(--secondary-font-color);
+    color: var(--primary-font-color-inverted);
+}
+
+/* ─── contact form ─────────────────────────────────────────────────────────── */
+
 .contact-form{
     padding: 10px;
 }
@@ -315,11 +614,11 @@ section{
     outline: 2px solid var(--secondary-font-color);
 }
 
-
 .input-group input:focus, .input-group textarea:focus{
     outline: 2px solid var(--secondary-font-color);
 }
-/* footer */
+
+/* ─── footer ───────────────────────────────────────────────────────────────── */
 
 footer{
     display: flex;
@@ -367,42 +666,109 @@ footer .info{
     color: var(--secondary-font-color);
 }
 
-@media screen and (max-width: 480px){
-    header{
+/* icon alignment in footer contact links */
+.contacts .links a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.contacts .links a ion-icon {
+    font-size: 1.1rem;
+    flex-shrink: 0;
+    color: var(--secondary-font-color);
+}
+
+/* ─── responsive ───────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+    /* ── header ── */
+    header {
         border: 1px solid rgb(175, 175, 175);
         padding: 20px;
         align-items: center;
         backdrop-filter: blur(10px);
         top: 0;
     }
-    header nav{
-        display: none;
+    header ion-icon { display: block; font-size: 36px; }
+    .title { display: none; }
+
+    /* ── mobile nav drawer ── */
+    header nav {
+        display: flex;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 2rem;
+        background: rgba(0, 0, 0, 0.92);
+        backdrop-filter: blur(12px);
+        z-index: 98;
+        padding: 40px 20px;
+
+        /* hidden state — off to the left, invisible */
+        opacity: 0;
+        visibility: hidden;
+        transform: translateX(-100%);
+        transition: opacity 0.35s ease, transform 0.35s ease, visibility 0.35s;
     }
 
-    header ion-icon{
-        display: block;
+    header nav.open {
+        opacity: 1;
+        visibility: visible;
+        transform: translateX(0);
+    }
+
+    header nav a {
+        font-size: 1.4rem;
+        font-family: var(--heading-font);
+        letter-spacing: 0.05em;
+    }
+
+    header nav button {
+        width: 220px;
+        padding: 14px;
+        font-size: 1rem;
+        background: var(--secondary-font-color);
+        color: var(--primary-font-color);
+    }
+
+    /* X close button inside the nav */
+    .nav-close {
+        position: absolute;
+        top: 20px;
+        right: 20px;
         font-size: 36px;
+        color: var(--primary-font-color-inverted);
+        cursor: pointer;
+        line-height: 1;
+        transition: color 0.2s;
     }
 
-    .title{
-        display: none;
+    .nav-close:hover {
+        color: var(--secondary-font-color);
     }
 
-    .cta{
+    /* keep hamburger above the nav overlay */
+    header ion-icon {
+        z-index: 99;
+        position: relative;
+    }
+
+    /* ── hero CTA ── */
+    .cta {
         margin-bottom: 150px;
         margin-block: 20px;
-        display: flex;
         flex-direction: column;
         gap: 2rem;
         padding: 10px;
     }
-
-    .cta a{
-        width: auto;
-        margin: 0;
-    }
-
-    .cta a:last-child::before{
+    .cta a { width: auto; margin: 0; }
+    .cta a:last-child::before {
         content: '';
         position: absolute;
         width: 92vw;
@@ -412,34 +778,110 @@ footer .info{
         opacity: 0;
         animation: throb ease-in 2s 4;
     }
-    footer{
+
+    /* ── services: mobile carousel ── */
+    .services {
         height: auto;
-        flex-direction: column;
+        scroll-snap-align: none;
+        padding: 16px;
     }
-    footer .info{
-    flex-direction: column;
-    align-items: baseline;
-    justify-content: center;
+    .scroll {
+        flex-direction: column;
+        height: auto;
+        flex: none;
+        gap: 0;
+    }
+
+    /* Hide the list — overview is the carousel on mobile */
+    .list-column { display: none; }
+
+    .overview {
+        width: 100%;
+        height: 460px;
+        position: relative;
+        overflow: hidden;
+        touch-action: pan-y; /* browser owns vertical, JS owns horizontal */
+    }
+
+    /* Dots — rendered inside .view-content by JS */
+    .swipe-dots {
+        display: flex;
+        gap: 7px;
+        margin-bottom: 10px;
+    }
+    .swipe-dot {
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.4);
+        transition: background 0.3s, transform 0.3s;
+        flex-shrink: 0;
+    }
+    .swipe-dot.active {
+        background: var(--secondary-font-color);
+        transform: scale(1.35);
+    }
+
+    /* Swipe hint / CTA row — sits below dots */
+    .mobile-cta-row {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 2px;
+    }
+
+    .swipe-hint {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        color: rgba(255,255,255,0.55);
+        font-size: 0.78rem;
+        font-family: "Raleway", sans-serif;
+        user-select: none;
+    }
+    .swipe-hint ion-icon { font-size: 15px; }
+
+    /* Two CTA buttons on last card */
+    .mobile-cta-btn {
+        flex: 1;
+        padding: 9px 6px;
+        font-weight: bold;
+        font-family: "Raleway", sans-serif;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        font-size: 0.72rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        border: 2px solid var(--secondary-font-color);
+    }
+    .mobile-cta-btn.filled {
+        background: var(--secondary-font-color);
+        color: white;
+    }
+    .mobile-cta-btn.outlined {
+        background: transparent;
+        color: var(--secondary-font-color);
+    }
+
+    /* ── footer ── */
+    footer { height: auto; flex-direction: column; }
+    footer .info { flex-direction: column; align-items: baseline; justify-content: center; }
+    footer hr { border: none; border-right: unset; border-bottom: 2px solid var(--accent-color); }
 }
 
-footer hr{
-    border: none;
-    border-right: unset;
-    border-bottom: 2px solid var(--accent-color);
-}
-}
-
-@media screen and (max-width: 768px){
-
-}
-
-@media screen and (min-width: 768px){
+@media screen and (min-width: 769px) {
     html, body {
         scrollbar-gutter: stable;
     }
 
-    .contact-form{
+    .contact-form {
         padding: 20px;
     }
-    
+
+    /* Desktop-only: hide mobile-specific UI */
+    .mobile-cta-btns { display: none; }
+    .mobile-dots { display: none; }
+    .swipe-hint { display: none; }
 }
