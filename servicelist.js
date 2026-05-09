@@ -5,7 +5,7 @@ export const services = [
         name: "High-Performance Roofing Systems",
         description: "Full-spectrum roofing services ranging from technical leak investigation and repair to complete high-grade roof replacements designed for maximum weather protection.",
         category: "Exterior Building Envelopes & Protection",
-        bgUrl: "https://images.unsplash.com/photo-1632778149955-e80f8ceca2e8?w=800"
+        bgUrl: "https://images.unsplash.com/photo-1633759593085-1eaeb724fc88?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
         id: "2",
