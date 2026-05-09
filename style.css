@@ -679,6 +679,20 @@ footer .info{
     color: var(--secondary-font-color);
 }
 
+/* services page */
+.search input{
+    padding: 8px;
+    background: none;
+    border: 1px solid var(--secondary-font-color);
+    color: var(--accent-color);
+    caret-color: var(--secondary-font-color);
+
+}
+
+.search input:focus{
+    outline: 2px solid var(--secondary-font-color);
+}
+
 /* ─── responsive ───────────────────────────────────────────────────────────── */
 
 @media screen and (max-width: 768px) {

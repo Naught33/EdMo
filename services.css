@@ -1,0 +1,383 @@
+/* ─── Services Page ──────────────────────────────────────────────────────────── */
+
+/* ── Mobile search bar (visible only on mobile, sits below header) ── */
+.mobile-search-bar {
+    display: none;
+}
+
+/* ── Page body wrapper ── */
+#services-body {
+    padding-top: 100px; /* clear fixed header */
+    padding-inline: 20px;
+    padding-bottom: 60px;
+    min-height: calc(100vh - 60px);
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ── Page heading ── */
+.services-page-heading {
+    margin-bottom: 10px;
+}
+
+.services-page-heading h1 {
+    font-size: 2.2rem;
+    font-family: var(--heading-font);
+    color: var(--primary-font-color-inverted);
+    letter-spacing: 0.03em;
+}
+
+.services-page-heading p {
+    color: rgba(255,255,255,0.65);
+    font-size: 0.95rem;
+    margin-top: 4px;
+}
+
+/* ── Category pills ── */
+.category-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-block: 18px;
+}
+
+.cat-pill {
+    padding: 6px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(254, 111, 94, 0.5);
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 0.03em;
+    transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+}
+
+.cat-pill:hover {
+    border-color: var(--secondary-font-color);
+    color: var(--secondary-font-color);
+}
+
+.cat-pill.active {
+    background: var(--secondary-font-color);
+    border-color: var(--secondary-font-color);
+    color: white;
+}
+
+/* ── Result count ── */
+.results-meta {
+    color: rgba(255,255,255,0.45);
+    font-size: 0.8rem;
+    margin-bottom: 16px;
+    font-family: "Raleway", sans-serif;
+    min-height: 1.2em;
+    transition: none;
+}
+
+/* ── Services grid ── */
+.services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+/* ── Service card ── */
+.service-card {
+    background: var(--primary-bg);
+    border: 1px solid rgba(254, 111, 94, 0.25);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    cursor: default;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    animation: fadeInUp 0.35s ease both;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 32px rgba(254, 111, 94, 0.15);
+    border-color: var(--secondary-font-color);
+}
+
+/* Card image */
+.card-img {
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.card-img::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        to bottom,
+        transparent 40%,
+        rgba(0,0,0,0.55) 100%
+    );
+}
+
+/* Card number badge on image */
+.card-num {
+    position: absolute;
+    bottom: 10px;
+    left: 14px;
+    font-family: var(--heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--secondary-font-color);
+    opacity: 0.85;
+    z-index: 2;
+    line-height: 1;
+}
+
+/* Card body */
+.card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 8px;
+}
+
+.card-body .cat-badge {
+    background: var(--secondary-font-color);
+    width: fit-content;
+    padding: 3px 12px;
+    color: white;
+    border-radius: 100px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    opacity: 0.9;
+}
+
+.card-body h2 {
+    font-family: var(--heading-font);
+    font-size: 1.15rem;
+    color: var(--primary-font-color);
+    line-height: 1.25;
+}
+
+/* highlight matched text */
+.card-body h2 mark,
+.card-body p mark {
+    background: rgba(254, 111, 94, 0.25);
+    color: var(--secondary-font-color);
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+.card-body p {
+    font-size: 0.875rem;
+    color: #555;
+    line-height: 1.6;
+    flex: 1;
+}
+
+/* ── Empty state ── */
+.empty-state {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 20px;
+    color: rgba(255,255,255,0.45);
+}
+
+.empty-state ion-icon {
+    font-size: 3rem;
+    color: var(--secondary-font-color);
+    opacity: 0.5;
+    display: block;
+    margin: 0 auto 12px;
+}
+
+.empty-state p {
+    font-family: "Raleway", sans-serif;
+    font-size: 1rem;
+}
+
+/* ── Pagination ── */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    margin-top: 36px;
+}
+
+.pagination button {
+    width: 38px;
+    height: 38px;
+    border: 1px solid rgba(254, 111, 94, 0.45);
+    background: transparent;
+    color: rgba(255,255,255,0.7);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+}
+
+.pagination button:hover:not(:disabled) {
+    border-color: var(--secondary-font-color);
+    color: var(--secondary-font-color);
+}
+
+.pagination button.active {
+    background: var(--secondary-font-color);
+    border-color: var(--secondary-font-color);
+    color: white;
+}
+
+.pagination button:disabled {
+    opacity: 0.25;
+    cursor: not-allowed;
+}
+
+.pagination .pg-arrow {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Services page nav search (desktop inside nav) ── */
+.search {
+    display: flex;
+    align-items: center;
+    gap: 0;
+}
+
+.search input {
+    padding: 8px 12px;
+    background: none;
+    border: 1px solid var(--secondary-font-color);
+    border-right: none;
+    color: var(--accent-color);
+    caret-color: var(--secondary-font-color);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    min-width: 200px;
+    transition: outline 0.2s ease;
+}
+
+.search input::placeholder {
+    color: rgba(255,255,255,0.35);
+}
+
+.search input:focus {
+    outline: none;
+    border-color: var(--secondary-font-color);
+}
+
+.search button {
+    padding: 8px 14px;
+    background: var(--secondary-font-color);
+    border: 1px solid var(--secondary-font-color);
+    color: white;
+    font-weight: bold;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    transition: background 0.2s ease, color 0.2s ease;
+}
+
+.search button:hover {
+    background: black;
+    color: var(--secondary-font-color);
+}
+
+/* ── Services page header: no hamburger nav close icon ── */
+/* (services.html has no .nav-close, so nothing needed) */
+
+/* ── Responsive ──────────────────────────────────────────────────────────────── */
+
+@media screen and (max-width: 768px) {
+
+    /* Hide search from nav on mobile (nav is full-screen drawer anyway) */
+    header nav .search {
+        display: none;
+    }
+
+    /* Show the standalone mobile search bar below header */
+    .mobile-search-bar {
+        display: flex;
+        position: fixed;
+        top: 0; /* set dynamically by JS after measuring header height */
+        left: 0;
+        right: 0;
+        z-index: 90;
+        padding: 8px 14px;
+        gap: 0;
+        backdrop-filter: blur(10px);
+        background: rgba(9, 1, 0, 0.75);
+        border-bottom: 1px solid rgba(254, 111, 94, 0.3);
+    }
+
+    .mobile-search-bar input {
+        flex: 1;
+        padding: 9px 12px;
+        background: none;
+        border: 1px solid var(--secondary-font-color);
+        border-right: none;
+        color: white;
+        caret-color: var(--secondary-font-color);
+        font-family: "Raleway", sans-serif;
+        font-size: 0.9rem;
+    }
+
+    .mobile-search-bar input::placeholder {
+        color: rgba(255,255,255,0.35);
+    }
+
+    .mobile-search-bar input:focus {
+        outline: none;
+    }
+
+    .mobile-search-bar button {
+        padding: 9px 14px;
+        background: var(--secondary-font-color);
+        border: 1px solid var(--secondary-font-color);
+        color: white;
+        font-weight: bold;
+        font-family: "Raleway", sans-serif;
+        font-size: 0.85rem;
+    }
+
+    /* push page body down to clear mobile search bar */
+    #services-body {
+        padding-top: 140px;
+        padding-inline: 14px;
+    }
+
+    /* tighter grid on mobile */
+    .services-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .services-page-heading h1 {
+        font-size: 1.6rem;
+    }
+
+    .cat-pill {
+        font-size: 0.75rem;
+        padding: 5px 13px;
+    }
+
+    .pagination button {
+        width: 34px;
+        height: 34px;
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .services-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}

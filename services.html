@@ -5,36 +5,409 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Services | Quality Roofing, Remodelling, Wood Restoration, Stucco and Plastering!</title>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js" type="module" defer></script>
+    <link rel="stylesheet" href="services.css">
 </head>
 <body>
+
+    <!-- ── Header ─────────────────────────────────────────────────────────── -->
     <header>
-             <div class="logo">
+        <div class="logo">
             <img src="./Assets/logo.png" alt="logo of the company">
-            <h1 class="title">Edmo</h1>
+            <h1 class="title">EdMo</h1>
         </div>
         <nav>
+            <ion-icon name="close-outline" class="nav-close"></ion-icon>
             <a href="index.html">Home</a>
+            <a href="#">Portfolio</a>
             <a href="contactus.html">Contact Us</a>
             <a href="about.html">About Us</a>
+            <!-- Desktop search — hidden on mobile via CSS -->
             <div class="search">
-                <input type="text" id="search" name="search" placeholder="e.g roofing solutions">
-                <button>Search</button>
+                <input type="text" id="search-desktop" name="search" placeholder="e.g. roofing solutions" autocomplete="off">
+                <button id="search-btn-desktop" aria-label="Search">Search</button>
             </div>
         </nav>
+        <!-- Hamburger icon (mobile) -->
+        <ion-icon name="menu-outline" id="hamburger-icon"></ion-icon>
     </header>
 
-    <div id="services-body">
-        <div class="card">
-            <h1>Title</h1>
-            <p>Description</p>
-        </div>
+    <!-- ── Mobile search bar (fixed below header, mobile only) ─────────────── -->
+    <div class="mobile-search-bar">
+        <input type="text" id="search-mobile" placeholder="Search services..." autocomplete="off">
+        <button id="search-btn-mobile" aria-label="Search">
+            <ion-icon name="search-outline"></ion-icon>
+        </button>
     </div>
 
-     <footer>
-        <div class="info"></div>
-        <div class="quick-links"></div>
-        <div class="contacts"></div>
-     </footer>
+    <!-- ── Services Body ─────────────────────────────────────────────────── -->
+    <div id="services-body">
+
+        <div class="services-page-heading">
+            <h1>Our Services</h1>
+            <p>Premium residential renovation and property care across Tennessee and Georgia.</p>
+        </div>
+
+        <!-- Category filter pills -->
+        <div class="category-filters" id="category-filters"></div>
+
+        <!-- Result count / search mode indicator -->
+        <p class="results-meta" id="results-meta"></p>
+
+        <!-- Cards grid -->
+        <div class="services-grid" id="services-grid"></div>
+
+        <!-- Pagination -->
+        <div class="pagination" id="pagination"></div>
+
+    </div>
+
+    <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+    <footer>
+        <div class="info">
+            <img src="./Assets/Logo_bg_black.png" alt="Edmo white logo with black background">
+            <p>2026 Copyright EdMo Elite Property Care, LLC</p>
+        </div>
+        <hr>
+        <div class="quick-links">
+            <h2>Quick Links</h2>
+            <div class="links">
+                <a href="#">Back to top</a>
+                <a href="services.html">Services</a>
+                <a href="#">Portfolio</a>
+                <a href="contactus.html">Contact Us</a>
+                <a href="about.html">About Us</a>
+            </div>
+        </div>
+        <hr>
+        <div class="contacts">
+            <h2>Contacts</h2>
+            <div class="links">
+                <a href="mailto:example@email.com">
+                    <ion-icon name="mail-outline"></ion-icon>example@email.com
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-whatsapp"></ion-icon>Whatsapp
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-instagram"></ion-icon>Instagram
+                </a>
+                <a href="#">
+                    <ion-icon name="logo-facebook"></ion-icon>Facebook
+                </a>
+                <a href="tel:+254000000000">
+                    <ion-icon name="call-outline"></ion-icon>+254 00 000 000
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script type="module">
+        import { services } from "./servicelist.js";
+
+        // ── Hamburger (mobile) ────────────────────────────────────────────────
+        const hamburger = document.getElementById("hamburger-icon");
+        const mobileNav = document.querySelector("header nav");
+        const navClose  = document.querySelector(".nav-close");
+        if (hamburger && mobileNav) {
+            hamburger.addEventListener("click", () => mobileNav.classList.add("open"));
+            navClose.addEventListener("click", () => mobileNav.classList.remove("open"));
+            mobileNav.addEventListener("click", (e) => {
+                if (e.target.tagName === "A") mobileNav.classList.remove("open");
+            });
+        }
+
+        // ── State ─────────────────────────────────────────────────────────────
+        const CARDS_PER_PAGE = 6;
+        let currentPage    = 1;
+        let activeCategory = "All";
+        let searchQuery    = "";
+        let searchMode     = "none"; // "none" | "direct" | "fuzzy"
+
+        // ── Category pills ────────────────────────────────────────────────────
+        const categories = ["All", ...new Set(services.map(s => s.category))];
+        const filtersEl  = document.getElementById("category-filters");
+
+        categories.forEach(cat => {
+            const btn = document.createElement("button");
+            btn.className = "cat-pill" + (cat === "All" ? " active" : "");
+            btn.textContent = cat;
+            btn.addEventListener("click", () => {
+                activeCategory = cat;
+                currentPage = 1;
+                document.querySelectorAll(".cat-pill").forEach(p => p.classList.remove("active"));
+                btn.classList.add("active");
+                render();
+            });
+            filtersEl.appendChild(btn);
+        });
+
+        // ── Search: direct substring (primary) ───────────────────────────────
+        // Searches for the query as a contiguous substring in name, category,
+        // and description (in that priority order). Returns a numeric score
+        // (lower = better) based on field priority + match position, or -1 if
+        // no match is found anywhere.
+        function directScore(query, service) {
+            const q = query.toLowerCase();
+            const fields = [
+                { text: service.name,        weight: 0  },
+                { text: service.category,    weight: 5  },
+                { text: service.description, weight: 10 },
+            ];
+            for (const { text, weight } of fields) {
+                const idx = text.toLowerCase().indexOf(q);
+                if (idx !== -1) return weight + idx * 0.01;
+            }
+            return -1;
+        }
+
+        // Wraps the matched substring in a <mark> tag.
+        function directHighlight(query, text) {
+            if (!query) return text;
+            const idx = text.toLowerCase().indexOf(query.toLowerCase());
+            if (idx === -1) return text;
+            return (
+                text.slice(0, idx) +
+                "<mark>" + text.slice(idx, idx + query.length) + "</mark>" +
+                text.slice(idx + query.length)
+            );
+        }
+
+        // ── Search: fuzzy (fallback) ──────────────────────────────────────────
+        // Every character of the query must appear in order in the target.
+        // Penalises gaps between matched characters so tighter matches score
+        // lower. Returns -1 if not all characters are found.
+        function fuzzyScore(query, target) {
+            const q = query.toLowerCase();
+            const t = target.toLowerCase();
+            let qi = 0, score = 0, lastMatch = -1;
+            for (let ti = 0; ti < t.length && qi < q.length; ti++) {
+                if (t[ti] === q[qi]) {
+                    score += (ti - lastMatch - 1);
+                    lastMatch = ti;
+                    qi++;
+                }
+            }
+            return qi < q.length ? -1 : score;
+        }
+
+        // Wraps each individually matched character in a <mark> tag.
+        function fuzzyHighlight(query, text) {
+            if (!query) return text;
+            const q = query.toLowerCase();
+            let result = "", qi = 0;
+            for (let i = 0; i < text.length; i++) {
+                if (qi < q.length && text[i].toLowerCase() === q[qi]) {
+                    result += "<mark>" + text[i] + "</mark>";
+                    qi++;
+                } else {
+                    result += text[i];
+                }
+            }
+            return result;
+        }
+
+        // ── Highlight dispatcher ──────────────────────────────────────────────
+        // Picks the right highlighter based on which search mode is active.
+        function highlight(text) {
+            if (!searchQuery || searchMode === "none") return text;
+            return searchMode === "direct"
+                ? directHighlight(searchQuery, text)
+                : fuzzyHighlight(searchQuery, text);
+        }
+
+        // ── Filter + sort ─────────────────────────────────────────────────────
+        function getFiltered() {
+            let pool = activeCategory === "All"
+                ? services
+                : services.filter(s => s.category === activeCategory);
+
+            if (!searchQuery) {
+                searchMode = "none";
+                return pool.map(s => ({ service: s, score: 0 }));
+            }
+
+            // Pass 1 — direct substring
+            const directResults = pool
+                .map(s => ({ service: s, score: directScore(searchQuery, s) }))
+                .filter(r => r.score >= 0)
+                .sort((a, b) => a.score - b.score);
+
+            if (directResults.length > 0) {
+                searchMode = "direct";
+                return directResults;
+            }
+
+            // Pass 2 — fuzzy fallback (only reached when direct finds nothing)
+            searchMode = "fuzzy";
+            return pool
+                .map(s => {
+                    const ns = fuzzyScore(searchQuery, s.name);
+                    const cs = fuzzyScore(searchQuery, s.category);
+                    const ds = fuzzyScore(searchQuery, s.description);
+                    const best = Math.min(
+                        ns >= 0 ? ns      : Infinity,
+                        cs >= 0 ? cs + 5  : Infinity,
+                        ds >= 0 ? ds + 10 : Infinity
+                    );
+                    return best === Infinity ? null : { service: s, score: best };
+                })
+                .filter(Boolean)
+                .sort((a, b) => a.score - b.score);
+        }
+
+        // ── Render ────────────────────────────────────────────────────────────
+        const gridEl = document.getElementById("services-grid");
+        const pgEl   = document.getElementById("pagination");
+        const metaEl = document.getElementById("results-meta");
+
+        function render() {
+            const filtered   = getFiltered();
+            const total      = filtered.length;
+            const totalPages = Math.max(1, Math.ceil(total / CARDS_PER_PAGE));
+            if (currentPage > totalPages) currentPage = totalPages;
+
+            const slice = filtered.slice(
+                (currentPage - 1) * CARDS_PER_PAGE,
+                currentPage * CARDS_PER_PAGE
+            );
+
+            // Meta label — gives the user feedback on which search mode fired
+            if (!searchQuery) {
+                metaEl.textContent = total + " service" + (total !== 1 ? "s" : "");
+            } else if (searchMode === "direct") {
+                metaEl.textContent = total + " result" + (total !== 1 ? "s" : "") + " for \"" + searchQuery + "\"";
+            } else {
+                // fuzzy mode
+                metaEl.textContent = total > 0
+                    ? "No exact matches \u2014 showing " + total + " similar result" + (total !== 1 ? "s" : "") + " for \"" + searchQuery + "\""
+                    : "No results for \"" + searchQuery + "\"";
+            }
+
+            // Grid
+            gridEl.innerHTML = "";
+
+            if (total === 0) {
+                gridEl.innerHTML =
+                    "<div class=\"empty-state\">" +
+                        "<ion-icon name=\"search-outline\"></ion-icon>" +
+                        "<p>No services matched \"<strong>" + searchQuery + "</strong>\".<br>Try a different term or clear the search.</p>" +
+                    "</div>";
+            } else {
+                slice.forEach(({ service: s }, i) => {
+                    const globalIdx = services.indexOf(s) + 1;
+                    const card = document.createElement("div");
+                    card.className = "service-card";
+                    card.style.animationDelay = (i * 0.05) + "s";
+                    card.innerHTML =
+                        "<div class=\"card-img\" style=\"background-image: url('" + s.bgUrl + "');\">" +
+                            "<span class=\"card-num\">0" + globalIdx + "</span>" +
+                        "</div>" +
+                        "<div class=\"card-body\">" +
+                            "<span class=\"cat-badge\">" + s.category + "</span>" +
+                            "<h2>" + highlight(s.name) + "</h2>" +
+                            "<p>" + highlight(s.description) + "</p>" +
+                        "</div>";
+                    gridEl.appendChild(card);
+                });
+            }
+
+            renderPagination(totalPages);
+        }
+
+        // ── Pagination ────────────────────────────────────────────────────────
+        function renderPagination(totalPages) {
+            pgEl.innerHTML = "";
+            if (totalPages <= 1) return;
+
+            const prev = document.createElement("button");
+            prev.className = "pg-arrow";
+            prev.innerHTML = "<ion-icon name=\"chevron-back-outline\"></ion-icon>";
+            prev.disabled = currentPage === 1;
+            prev.addEventListener("click", () => { currentPage--; render(); scrollToGrid(); });
+            pgEl.appendChild(prev);
+
+            pageRange(currentPage, totalPages).forEach(p => {
+                const btn = document.createElement("button");
+                if (p === "...") {
+                    btn.disabled = true;
+                    btn.textContent = "\u2026";
+                } else {
+                    btn.textContent = p;
+                    if (p === currentPage) btn.classList.add("active");
+                    btn.addEventListener("click", () => { currentPage = p; render(); scrollToGrid(); });
+                }
+                pgEl.appendChild(btn);
+            });
+
+            const next = document.createElement("button");
+            next.className = "pg-arrow";
+            next.innerHTML = "<ion-icon name=\"chevron-forward-outline\"></ion-icon>";
+            next.disabled = currentPage === totalPages;
+            next.addEventListener("click", () => { currentPage++; render(); scrollToGrid(); });
+            pgEl.appendChild(next);
+        }
+
+        function pageRange(cur, total) {
+            if (total <= 7) return Array.from({ length: total }, (_, i) => i + 1);
+            const pages = [];
+            const left  = Math.max(2, cur - 1);
+            const right = Math.min(total - 1, cur + 1);
+            pages.push(1);
+            if (left > 2) pages.push("...");
+            for (let i = left; i <= right; i++) pages.push(i);
+            if (right < total - 1) pages.push("...");
+            pages.push(total);
+            return pages;
+        }
+
+        function scrollToGrid() {
+            gridEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        // ── Search wiring ─────────────────────────────────────────────────────
+        function syncSearch(val) {
+            searchQuery = val.trim();
+            currentPage = 1;
+            document.getElementById("search-desktop").value = val;
+            document.getElementById("search-mobile").value  = val;
+            render();
+        }
+
+        ["search-desktop", "search-mobile"].forEach(id => {
+            document.getElementById(id).addEventListener("input",  (e) => syncSearch(e.target.value));
+            document.getElementById(id).addEventListener("keydown", (e) => { if (e.key === "Enter") syncSearch(e.target.value); });
+        });
+
+        document.getElementById("search-btn-desktop").addEventListener("click", () =>
+            syncSearch(document.getElementById("search-desktop").value));
+        document.getElementById("search-btn-mobile").addEventListener("click", () =>
+            syncSearch(document.getElementById("search-mobile").value));
+
+        // ── Position mobile search bar flush below header ─────────────────────
+        const mobileSearchBar = document.querySelector(".mobile-search-bar");
+        const headerEl        = document.querySelector("header");
+
+        function positionMobileSearch() {
+            if (window.innerWidth <= 768) {
+                const headerHeight   = headerEl.getBoundingClientRect().height;
+                mobileSearchBar.style.top = headerHeight + "px";
+                const barHeight = mobileSearchBar.getBoundingClientRect().height;
+                document.getElementById("services-body").style.paddingTop =
+                    (headerHeight + barHeight + 12) + "px";
+            } else {
+                mobileSearchBar.style.top = "";
+                document.getElementById("services-body").style.paddingTop = "";
+            }
+        }
+
+        positionMobileSearch();
+        window.addEventListener("resize", positionMobileSearch);
+
+        // ── Init ──────────────────────────────────────────────────────────────
+        render();
+    </script>
 </body>
 </html>
