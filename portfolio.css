@@ -1,0 +1,575 @@
+/* ── portfolio.css ──────────────────────────────────────────────────────────── */
+
+/* ── Page wrapper ── */
+#portfolio-body {
+    padding-top: 100px;
+    color: var(--primary-font-color-inverted);
+}
+
+/* ── Shared section rhythm ── */
+.pf-section {
+    padding: 72px 60px;
+}
+
+.pf-section + .pf-section {
+    border-top: 1px solid rgba(254,111,94,0.12);
+}
+
+/* ── Page hero ── */
+.pf-hero {
+    background: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    padding: 64px 60px 52px;
+    position: relative;
+    overflow: hidden;
+}
+
+.pf-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(125deg, rgba(254,111,94,0.1) 0%, transparent 55%);
+    pointer-events: none;
+}
+
+.pf-hero .eyebrow {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--secondary-font-color);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.pf-hero .eyebrow::before {
+    content: '';
+    display: inline-block;
+    width: 36px;
+    height: 2px;
+    background: var(--secondary-font-color);
+    flex-shrink: 0;
+}
+
+.pf-hero h1 {
+    font-family: var(--heading-font);
+    font-size: clamp(2.6rem, 5vw, 4.5rem);
+    font-weight: 700;
+    color: white;
+    line-height: 1.06;
+    max-width: 720px;
+}
+
+.pf-hero h1 span {
+    color: var(--secondary-font-color);
+}
+
+.pf-hero p {
+    margin-top: 20px;
+    font-family: "Raleway", sans-serif;
+    color: rgba(255,255,255,0.82);
+    font-size: 1.05rem;
+    max-width: 560px;
+    line-height: 1.7;
+}
+
+/* ── Project entry ── */
+.project-entry {
+    background: none;
+}
+
+.project-entry + .project-entry {
+    margin-top: 0;
+}
+
+/* Project header */
+.project-header {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.project-num {
+    font-family: var(--heading-font);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--secondary-font-color);
+    letter-spacing: 0.08em;
+    flex-shrink: 0;
+}
+
+.project-header h2 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    color: white;
+    line-height: 1.15;
+    font-weight: 700;
+}
+
+.project-header hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid rgba(254,111,94,0.3);
+    margin: 0;
+}
+
+/* ── Image strip: before / in-progress / after ── */
+.image-strip {
+    display: grid;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+
+/* 2-photo projects */
+.image-strip.cols-2 { grid-template-columns: 1fr 1fr; }
+/* 3-photo projects */
+.image-strip.cols-3 { grid-template-columns: 1fr 1fr 1fr; }
+
+.img-frame {
+    position: relative;
+    overflow: hidden;
+    background: #111;
+}
+
+.img-frame img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.45s ease;
+}
+
+.img-frame:hover img {
+    transform: scale(1.03);
+}
+
+/* label badge */
+.img-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding: 5px 14px;
+    background: var(--secondary-font-color);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: white;
+}
+
+/* ── Project body text ── */
+.project-body {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    align-items: start;
+}
+
+.project-body.full-width {
+    grid-template-columns: 1fr;
+}
+
+.project-description p {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.8;
+    margin-bottom: 14px;
+}
+
+/* ── Tip/info card ── */
+.project-tips {
+    background: rgba(0, 0, 0, 0.55);
+    border: 1px solid rgba(254,111,94,0.35);
+    padding: 24px 26px;
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+}
+
+.project-tips .tips-label {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--secondary-font-color);
+    margin-bottom: 12px;
+    display: block;
+}
+
+.project-tips h3 {
+    font-family: var(--heading-font);
+    font-size: 1.15rem;
+    color: white;
+    margin-bottom: 14px;
+    line-height: 1.2;
+}
+
+.project-tips ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.project-tips ul li {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.85);
+    line-height: 1.6;
+    padding-left: 18px;
+    position: relative;
+}
+
+.project-tips ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    background: var(--secondary-font-color);
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.project-tips .tip-strong {
+    font-weight: 700;
+    color: white;
+}
+
+.project-tips .tips-cta {
+    margin-top: 6px;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.85rem;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    font-style: italic;
+}
+
+/* ── CTA inline button ── */
+.inline-cta {
+    margin-top: 20px;
+}
+
+.inline-cta a {
+    display: inline-block;
+    padding: 12px 32px;
+    background: var(--secondary-font-color);
+    border: 2px solid var(--secondary-font-color);
+    color: white;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.inline-cta a:hover {
+    background: transparent;
+    color: var(--secondary-font-color);
+}
+
+/* ── Feature list (gold standard section) ── */
+.feature-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    margin-top: 18px;
+}
+
+.feature-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+}
+
+.feature-item .fi-icon {
+    width: 32px;
+    height: 32px;
+    background: var(--secondary-font-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.feature-item .fi-icon ion-icon {
+    font-size: 1rem;
+    color: white;
+}
+
+.feature-item .fi-text strong {
+    display: block;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 3px;
+}
+
+.feature-item .fi-text span {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.875rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.6;
+}
+
+/* ── Video section ── */
+.pf-video-section {
+    padding: 72px 60px;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(254,111,94,0.12);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.pf-video-section .section-label {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--secondary-font-color);
+    display: block;
+    margin-bottom: 10px;
+}
+
+.pf-video-section h2 {
+    font-family: var(--heading-font);
+    font-size: 2.2rem;
+    color: white;
+    margin-bottom: 32px;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+}
+
+.video-frame {
+    position: relative;
+    background: #111;
+    border: 1px solid rgba(254,111,94,0.2);
+    overflow: hidden;
+}
+
+.video-frame video,
+.video-frame iframe {
+    width: 100%;
+    display: block;
+    aspect-ratio: 16/9;
+    border: none;
+    background: #000;
+}
+
+/* placeholder for when video path hasn't been set yet */
+.video-placeholder {
+    aspect-ratio: 16/9;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: #111;
+}
+
+.video-placeholder ion-icon {
+    font-size: 3rem;
+    color: var(--secondary-font-color);
+    opacity: 0.6;
+}
+
+.video-placeholder span {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* ── Bottom CTA band ── */
+.pf-cta-band {
+    background: rgba(0, 0, 0, 0.45) !important;
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+    padding: 80px 60px;
+    text-align: center;
+    border-top: 1px solid rgba(254,111,94,0.12);
+}
+
+.pf-cta-band h2 {
+    font-family: var(--heading-font);
+    font-size: 2.5rem;
+    color: white;
+    margin-bottom: 12px;
+    line-height: 1.15;
+}
+
+.pf-cta-band p {
+    font-family: "Raleway", sans-serif;
+    color: rgba(255,255,255,0.82);
+    font-size: 1rem;
+    margin-bottom: 32px;
+    max-width: 500px;
+    margin-inline: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.cta-buttons a {
+    padding: 14px 36px;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    font-size: 0.88rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    border: 2px solid var(--secondary-font-color);
+    text-decoration: none;
+    transition: background 0.25s ease, color 0.25s ease;
+}
+
+.cta-buttons a.filled {
+    background: var(--secondary-font-color);
+    color: white;
+}
+
+.cta-buttons a.filled:hover {
+    background: transparent;
+    color: var(--secondary-font-color);
+}
+
+.cta-buttons a.outlined {
+    background: transparent;
+    color: var(--secondary-font-color);
+}
+
+.cta-buttons a.outlined:hover {
+    background: var(--secondary-font-color);
+    color: white;
+}
+
+/* ── Gold standard showcase section ── */
+.pf-gold-section {
+    padding: 72px 60px;
+    background: rgba(0, 0, 0, 0.5);
+    border-top: 1px solid rgba(254,111,94,0.12);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.pf-gold-section .gold-header {
+    display: flex;
+    align-items: baseline;
+    gap: 18px;
+    margin-bottom: 36px;
+}
+
+.pf-gold-section .gold-header h2 {
+    font-family: var(--heading-font);
+    font-size: clamp(1.5rem, 2.8vw, 2.2rem);
+    color: white;
+    font-weight: 700;
+}
+
+.pf-gold-section .gold-header hr {
+    flex: 1;
+    border: none;
+    border-top: 1px solid rgba(254,111,94,0.3);
+}
+
+.gold-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+}
+
+.gold-images {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+.gold-images .img-frame img {
+    height: 220px;
+}
+
+.gold-images .img-frame.wide {
+    grid-column: 1 / -1;
+}
+
+.gold-images .img-frame.wide img {
+    height: 260px;
+}
+
+.gold-text p {
+    font-family: "Raleway", sans-serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.82);
+    line-height: 1.8;
+    margin-bottom: 24px;
+}
+
+/* ── Responsive ── */
+@media screen and (max-width: 768px) {
+    #portfolio-body { padding-top: 80px; }
+
+    .pf-hero,
+    .pf-section,
+    .pf-video-section,
+    .pf-gold-section,
+    .pf-cta-band { padding: 48px 20px; }
+
+    .pf-hero h1 { font-size: 2.2rem; }
+
+    .image-strip.cols-2,
+    .image-strip.cols-3 { grid-template-columns: 1fr; }
+
+    .img-frame img { height: 220px; }
+
+    .project-body { grid-template-columns: 1fr; gap: 24px; }
+
+    .gold-layout { grid-template-columns: 1fr; gap: 28px; }
+
+    .gold-images { grid-template-columns: 1fr; }
+    .gold-images .img-frame.wide { grid-column: 1; }
+    .gold-images .img-frame img,
+    .gold-images .img-frame.wide img { height: 200px; }
+
+    .pf-cta-band h2 { font-size: 1.9rem; }
+
+    .project-header { flex-wrap: wrap; }
+    .project-header hr { display: none; }
+
+    .video-grid { grid-template-columns: 1fr; }
+}
+
+@media screen and (min-width: 769px) and (max-width: 1024px) {
+    .pf-hero,
+    .pf-section,
+    .pf-video-section,
+    .pf-gold-section,
+    .pf-cta-band { padding: 60px 32px; }
+
+    .image-strip.cols-3 { grid-template-columns: 1fr 1fr; }
+    .project-body { grid-template-columns: 1fr; gap: 28px; }
+    .gold-layout { grid-template-columns: 1fr; gap: 28px; }
+}
