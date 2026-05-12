@@ -690,6 +690,19 @@ section{
     text-align: center;
 }
 
+.form-error {
+    display: none;
+    padding: 14px;
+    margin-top: 12px;
+    border: 1px solid #e53e3e;
+    background: rgba(229, 62, 62, 0.06);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    color: #e53e3e;
+    font-weight: 600;
+    text-align: center;
+}
+
 @media screen and (max-width: 600px) {
     .form-name-row {
         grid-template-columns: 1fr;

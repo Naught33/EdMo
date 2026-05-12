@@ -36,7 +36,7 @@
         </h1>
         <div class="cta">
             <a href="services.html">See our services</a>
-            <a href="tel:+254000000000">Call us now</a>
+            <a href="tel:+12817458403">Call us now</a>
         </div>
     </section>
 
@@ -92,7 +92,7 @@
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="E.g. example@email.com"
+                    placeholder="E.g. edmoeliteservices@gmail.com"
                     data-validate="required email"
                 >
             </div>
@@ -153,6 +153,9 @@
             <div class="form-success" id="home-form-success">
                 &#10003; Message sent! We'll be in touch within one business day.
             </div>
+            <div class="form-error" id="home-form-error">
+                &#9888; Something went wrong. Please try again or call us directly.
+            </div>
         </form>
     </section>
 
@@ -176,8 +179,8 @@
         <div class="contacts">
             <h2>Contacts</h2>
             <div class="links">
-                <a href="mailto:example@email.com">
-                    <ion-icon name="mail-outline"></ion-icon>example@email.com
+                <a href="mailto:edmoeliteservices@gmail.com">
+                    <ion-icon name="mail-outline"></ion-icon>edmoeliteservices@gmail.com
                 </a>
                 <a href="#">
                     <ion-icon name="logo-whatsapp"></ion-icon>Whatsapp
@@ -188,8 +191,8 @@
                 <a href="#">
                     <ion-icon name="logo-facebook"></ion-icon>Facebook
                 </a>
-                <a href="tel:+254000000000">
-                    <ion-icon name="call-outline"></ion-icon>+254 00 000 000
+                <a href="tel:+12817458403">
+                    <ion-icon name="call-outline"></ion-icon>+1 (281) 745-8403
                 </a>
             </div>
         </div>
@@ -200,18 +203,33 @@
 
     <script type="module">
         import { validateForm, clearErrors, attachInlineValidation, showSuccess } from "./formvalidation.js";
+        import { sendFormEmail, showEmailError } from "./emailservice.js";
 
         const form      = document.getElementById("home-contact-form");
         const successEl = document.getElementById("home-form-success");
+        const errorEl   = document.getElementById("home-form-error");
+        const submitBtn = document.getElementById("send-inquiry");
 
         attachInlineValidation(form);
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             clearErrors(form);
-            if (validateForm(form)) {
+            if (!validateForm(form)) return;
+
+            submitBtn.disabled    = true;
+            submitBtn.textContent = "Sending…";
+
+            const result = await sendFormEmail(form, "Home Page");
+
+            submitBtn.disabled    = false;
+            submitBtn.textContent = "Send";
+
+            if (result.success) {
                 showSuccess(form, successEl);
                 form.reset();
+            } else {
+                showEmailError(form, errorEl);
             }
         });
     </script>

@@ -47,22 +47,22 @@
                 <div class="info-block">
                     <span class="info-label">Reach Us Directly</span>
                     <div class="contact-cards">
-                        <a href="tel:+254000000000" class="contact-card">
+                        <a href="tel:+12817458403" class="contact-card">
                             <div class="cc-icon">
                                 <ion-icon name="call-outline"></ion-icon>
                             </div>
                             <div class="cc-detail">
                                 <span>Phone</span>
-                                <span>+254 00 000 000</span>
+                                <span>+1 (281) 745-8403</span>
                             </div>
                         </a>
-                        <a href="mailto:example@email.com" class="contact-card">
+                        <a href="mailto:edmoeliteservices@gmail.com" class="contact-card">
                             <div class="cc-icon">
                                 <ion-icon name="mail-outline"></ion-icon>
                             </div>
                             <div class="cc-detail">
                                 <span>Email</span>
-                                <span>example@email.com</span>
+                                <span>edmoeliteservices@gmail.com</span>
                             </div>
                         </a>
                         <a href="#" class="contact-card">
@@ -157,7 +157,7 @@
 
                     <div class="input-group">
                         <label for="email">Email Address</label>
-                        <input type="email" id="email" name="email" placeholder="example@email.com" data-validate="required email">
+                        <input type="email" id="email" name="email" placeholder="edmoeliteservices@gmail.com" data-validate="required email">
                     </div>
 
                     <div class="input-group">
@@ -199,6 +199,9 @@
                     <div class="form-success" id="form-success">
                         &#10003; Message sent! We'll be in touch within one business day.
                     </div>
+                    <div class="form-error" id="form-error">
+                        &#9888; Something went wrong. Please try again or call us directly.
+                    </div>
                 </form>
             </div>
 
@@ -226,8 +229,8 @@
         <div class="contacts">
             <h2>Contacts</h2>
             <div class="links">
-                <a href="mailto:example@email.com">
-                    <ion-icon name="mail-outline"></ion-icon>example@email.com
+                <a href="mailto:edmoeliteservices@gmail.com">
+                    <ion-icon name="mail-outline"></ion-icon>edmoeliteservices@gmail.com
                 </a>
                 <a href="#">
                     <ion-icon name="logo-whatsapp"></ion-icon>Whatsapp
@@ -238,8 +241,8 @@
                 <a href="#">
                     <ion-icon name="logo-facebook"></ion-icon>Facebook
                 </a>
-                <a href="tel:+254000000000">
-                    <ion-icon name="call-outline"></ion-icon>+254 00 000 000
+                <a href="tel:+12817458403">
+                    <ion-icon name="call-outline"></ion-icon>+1 (281) 745-8403
                 </a>
             </div>
         </div>
@@ -250,18 +253,33 @@
 
     <script type="module">
         import { validateForm, clearErrors, attachInlineValidation, showSuccess } from "./formvalidation.js";
+        import { sendFormEmail, showEmailError } from "./emailservice.js";
 
         const form      = document.getElementById("contact-form");
         const successEl = document.getElementById("form-success");
+        const errorEl   = document.getElementById("form-error");
+        const submitBtn = document.getElementById("send-inquiry");
 
         attachInlineValidation(form);
 
-        form.addEventListener("submit", (e) => {
+        form.addEventListener("submit", async (e) => {
             e.preventDefault();
             clearErrors(form);
-            if (validateForm(form)) {
+            if (!validateForm(form)) return;
+
+            submitBtn.disabled    = true;
+            submitBtn.textContent = "Sending…";
+
+            const result = await sendFormEmail(form, "Contact Page");
+
+            submitBtn.disabled    = false;
+            submitBtn.textContent = "Send Message";
+
+            if (result.success) {
                 showSuccess(form, successEl);
                 form.reset();
+            } else {
+                showEmailError(form, errorEl);
             }
         });
     </script>

@@ -97,7 +97,7 @@ function buildOverview(service) {
                     <div class="swipe-dots">${dots}</div>
                     <div class="mobile-cta-row${isLast ? ' last' : ''}">
                         ${isLast
-                            ? `<a href="tel:+254000000000" class="mobile-cta-btn filled">Call us now</a>
+                            ? `<a href="tel:+12817458403" class="mobile-cta-btn filled">Call us now</a>
                                <a href="services.html" class="mobile-cta-btn outlined">All Services</a>`
                             : `<span class="swipe-hint"><ion-icon name="swap-horizontal-outline"></ion-icon> Swipe for more</span>`
                         }
@@ -122,7 +122,7 @@ function buildList(activeIndex) {
             const cta = document.createElement("div");
             cta.className = "horizontal-card cta-card down";
             cta.innerHTML = `
-                <a href="tel:+254000000000" class="call">Call us now</a>
+                <a href="tel:+12817458403" class="call">Call us now</a>
                 <a href="services.html" class="services-link">All Services</a>
             `;
             listEl.appendChild(cta);
