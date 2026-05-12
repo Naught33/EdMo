@@ -5,28 +5,28 @@ export const services = [
         name: "High-Performance Roofing Systems",
         description: "Full-spectrum roofing services ranging from technical leak investigation and repair to complete high-grade roof replacements designed for maximum weather protection.",
         category: "Exterior Building Envelopes & Protection",
-        bgUrl: "https://images.unsplash.com/photo-1633759593085-1eaeb724fc88?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        bgUrl: "./Assets/roof.jpeg"
     },
     {
         id: "2",
         name: "Precision Painting & Surface Coating",
         description: "High-durability exterior and interior painting focusing on meticulous surface preparation and premium finishes that offer long-term protection.",
         category: "Exterior Building Envelopes & Protection",
-        bgUrl: "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=800"
+        bgUrl: "./Assets/painting.jpeg"
     },
     {
         id: "3",
         name: "Specialized Stucco & Plastering",
         description: "Professional application and repair of traditional and modern stucco finishes, including color matching and texture restoration to ensure a seamless, breathable, and moisture-resistant exterior.",
         category: "Exterior Building Envelopes & Protection",
-        bgUrl: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800"
+        bgUrl: "./Assets/Stacco_after.jpeg"
     },
     {
         id: "4",
         name: "Structural Wood Restoration",
         description: "Expert diagnostics and repair of wood decay, targeting fascia, soffits, and trim to safeguard the home's structural integrity.",
         category: "Exterior Building Envelopes & Protection",
-        bgUrl: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?w=800"
+        bgUrl: "https://images.unsplash.com/photo-1728025801541-20b44f6ed5f3?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
         id: "5",
@@ -49,14 +49,14 @@ export const services = [
         name: "Premium Wood Flooring",
         description: "Expert installation and dustless refinishing of hardwood and specialized wood floors to enhance interior value and aesthetic.",
         category: "Interior Renovations & Finishes",
-        bgUrl: "https://images.unsplash.com/photo-1541123437800-1bb1317badc2?w=800"
+        bgUrl: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
         id: "8",
         name: "Precision Surface & Stair Tiling",
         description: "Technical installation of ceramic, porcelain, and stone tiling for high-traffic surfaces, ensuring perfect alignment and lasting durability.",
         category: "Interior Renovations & Finishes",
-        bgUrl: "https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800"
+        bgUrl: "https://images.unsplash.com/photo-1594055364451-697970558dec?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
 
     // Outdoor Living & Hardscapes
@@ -72,13 +72,13 @@ export const services = [
         name: "Artisanal Masonry & Brickwork",
         description: "Specialized masonry for patios, fireplaces, and pathways, utilizing premium natural stone and brick to create elegant architectural accents.",
         category: "Outdoor Living & Hardscapes",
-        bgUrl: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?w=800"
+        bgUrl: "./Assets/Yard_after.jpeg"
     },
     {
         id: "11",
         name: "Hardscape Concrete Solutions",
         description: "Professional design and pouring of high-strength concrete for driveways, walkways, and retaining walls, prioritizing drainage and structural durability.",
         category: "Outdoor Living & Hardscapes",
-        bgUrl: "https://images.unsplash.com/photo-1621619856624-42fd193a0661?w=800"
+        bgUrl: "./Assets/Golden_standard_2.jpeg"
     }
 ]

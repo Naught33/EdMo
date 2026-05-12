@@ -1,0 +1,10 @@
+# ================================
+# EdMo Elite Property Care LLC - robots.txt
+# http://www.edmoelite.com/
+# ================================
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: http://www.edmoelite.com/sitemap.xml
