@@ -100,6 +100,33 @@ body{
     background-attachment: fixed;
 }
 
+/* ── Safari background-attachment: fixed fix ────────────────────────────────
+   Safari mishandles background-size: cover when background-attachment: fixed
+   is set, and iOS ignores fixed entirely. We detect Safari via the
+   -webkit-touch-callout feature (only true in Safari/WebKit) and replace the
+   body background with a fixed-position ::before pseudo-element instead.
+   Chrome and Firefox never enter this block so their implementation is
+   completely untouched.
+─────────────────────────────────────────────────────────────────────────── */
+@supports (-webkit-touch-callout: none) {
+    body {
+        background: none;
+        background-color: rgb(243, 249, 252);
+    }
+
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(var(--overlay-color), var(--overlay-color)),
+                    url("./Assets/crane.jpg");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+}
+
 /* header hidden state when services section is active */
 header.hidden {
     opacity: 0;
@@ -616,6 +643,57 @@ section{
 
 .input-group input:focus, .input-group textarea:focus{
     outline: 2px solid var(--secondary-font-color);
+}
+
+/* ─── home form helpers ─────────────────────────────────────────────────────── */
+
+.form-name-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.form-select {
+    padding: 10px 36px 10px 10px;
+    border: 1px solid var(--secondary-font-color);
+    background: white;
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    color: #333;
+    caret-color: var(--secondary-font-color);
+    appearance: none;
+    -webkit-appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23FE6F5E' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+.form-select:focus {
+    outline: 2px solid var(--secondary-font-color);
+}
+
+.form-textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.form-success {
+    display: none;
+    padding: 14px;
+    margin-top: 12px;
+    border: 1px solid var(--secondary-font-color);
+    background: rgba(254, 111, 94, 0.06);
+    font-family: "Raleway", sans-serif;
+    font-size: 0.9rem;
+    color: var(--secondary-font-color);
+    font-weight: 600;
+    text-align: center;
+}
+
+@media screen and (max-width: 600px) {
+    .form-name-row {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* ─── footer ───────────────────────────────────────────────────────────────── */

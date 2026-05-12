@@ -19,7 +19,7 @@
             <a href="portfolio.html">Portfolio</a>
             <a href="contactus.html">Contact Us</a>
             <a href="about.html">About Us</a>
-            <button>Get a free quote</button>
+            <button onclick="window.location.href='contactus.html'">Get a free quote</button>
         </nav>
         <ion-icon name="menu-outline"></ion-icon>
     </header>
@@ -28,15 +28,15 @@
     <section class="section hero">
         <h1>
             <p class="hook">
-                Trusted Home Renovation Contractors in Tennesse and Georgia.
+                Trusted Home Renovation Contractors in Georgia and Tennessee.
             </p>
             <p class="desc">
-                Roofing, Painting, Flooring & More.
+                Roofing, Painting, Flooring &amp; More.
             </p>
         </h1>
         <div class="cta">
-            <a href="#">See our services</a>
-            <a href="#">Call us now</a>
+            <a href="services.html">See our services</a>
+            <a href="tel:+254000000000">Call us now</a>
         </div>
     </section>
 
@@ -56,26 +56,107 @@
     </section>
 
     <!-- contact form -->
-     <section class="section contact-form">
+    <section class="section contact-form">
         <h2>Have any inquiries? Ask below!</h2>
-        <form action="">
-            <div class="input-group">
-                <label for="name">Your Name</label>
-                <input type="text" placeholder="E.g John Doe" name="name" id="name">
+
+        <form id="home-contact-form" action="" novalidate>
+
+            <!-- Name row -->
+            <div class="form-name-row">
+                <div class="input-group">
+                    <label for="first-name">First Name</label>
+                    <input
+                        type="text"
+                        id="first-name"
+                        name="first-name"
+                        placeholder="E.g. John"
+                        data-validate="required"
+                    >
+                </div>
+                <div class="input-group">
+                    <label for="last-name">Last Name</label>
+                    <input
+                        type="text"
+                        id="last-name"
+                        name="last-name"
+                        placeholder="E.g. Doe"
+                        data-validate="required"
+                    >
+                </div>
             </div>
+
+            <!-- Email -->
             <div class="input-group">
-                <label for="email">Your Email</label>
-                <input type="email" placeholder="E.g exampleemail@gmail.com" name="email" id="email">
+                <label for="email">Email Address</label>
+                <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    placeholder="E.g. example@email.com"
+                    data-validate="required email"
+                >
             </div>
+
+            <!-- Phone -->
+            <div class="input-group">
+                <label for="phone">Phone Number</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="E.g. +1 (555) 000-0000"
+                    data-validate="tel"
+                >
+            </div>
+
+            <!-- Service -->
+            <div class="input-group">
+                <label for="service">Service Interested In</label>
+                <select id="service" name="service" data-validate="select" class="form-select">
+                    <option value="" disabled selected>Select a service...</option>
+                    <optgroup label="Exterior Building Envelopes &amp; Protection">
+                        <option>High-Performance Roofing Systems</option>
+                        <option>Precision Painting &amp; Surface Coating</option>
+                        <option>Specialized Stucco &amp; Plastering</option>
+                        <option>Structural Wood Restoration</option>
+                        <option>Durable Siding Installation</option>
+                    </optgroup>
+                    <optgroup label="Interior Renovations &amp; Finishes">
+                        <option>Bespoke Bathroom Remodeling</option>
+                        <option>Premium Wood Flooring</option>
+                        <option>Precision Surface &amp; Stair Tiling</option>
+                    </optgroup>
+                    <optgroup label="Outdoor Living &amp; Hardscapes">
+                        <option>Custom Decking &amp; Outdoor Structures</option>
+                        <option>Artisanal Masonry &amp; Brickwork</option>
+                        <option>Hardscape Concrete Solutions</option>
+                    </optgroup>
+                    <option value="other">Other / Not Sure Yet</option>
+                </select>
+            </div>
+
+            <!-- Message -->
             <div class="input-group">
                 <label for="message">Message</label>
-                <textarea name="message" id="message"></textarea>
+                <textarea
+                    id="message"
+                    name="message"
+                    placeholder="Describe your project, any concerns, or questions you have..."
+                    data-validate="required"
+                    data-minlength="10"
+                    class="form-textarea"
+                ></textarea>
             </div>
-            <button id="send-inquiry">Send</button>
-        </form>
-     </section>
 
-     <footer>
+            <button id="send-inquiry" type="submit">Send</button>
+
+            <div class="form-success" id="home-form-success">
+                &#10003; Message sent! We'll be in touch within one business day.
+            </div>
+        </form>
+    </section>
+
+    <footer>
         <div class="info">
             <img src="./Assets/Logo_bg_black.png" alt="Edmo white logo with black background">
             <p>©2026 Copyright EdMo Elite Property Care, LLC</p>
@@ -83,19 +164,17 @@
         <hr>
         <div class="quick-links">
             <h2>Quick Links</h2>
-
             <div class="links">
                 <a href="#">Back to top</a>
-                <a href="#">Services</a>
-                <a href="#">Portfolio</a>
-                <a href="#">Contact Us</a>
-                <a href="#">About Us</a>
+                <a href="services.html">Services</a>
+                <a href="portfolio.html">Portfolio</a>
+                <a href="contactus.html">Contact Us</a>
+                <a href="about.html">About Us</a>
             </div>
         </div>
         <hr>
         <div class="contacts">
             <h2>Contacts</h2>
-
             <div class="links">
                 <a href="mailto:example@email.com">
                     <ion-icon name="mail-outline"></ion-icon>example@email.com
@@ -114,8 +193,27 @@
                 </a>
             </div>
         </div>
-     </footer>
-     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    </footer>
+
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <script type="module">
+        import { validateForm, clearErrors, attachInlineValidation, showSuccess } from "./formvalidation.js";
+
+        const form      = document.getElementById("home-contact-form");
+        const successEl = document.getElementById("home-form-success");
+
+        attachInlineValidation(form);
+
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            clearErrors(form);
+            if (validateForm(form)) {
+                showSuccess(form, successEl);
+                form.reset();
+            }
+        });
+    </script>
 </body>
 </html>

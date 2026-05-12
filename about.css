@@ -231,8 +231,8 @@
 }
 
 .value-card {
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(254,111,94,0.2);
+    background: var(--base-bg);
+    border: 1px solid rgba(254,111,94,0.25);
     padding: 32px 28px;
     position: relative;
     overflow: hidden;
@@ -240,7 +240,7 @@
 }
 
 .value-card:hover {
-    background: rgba(254,111,94,0.07);
+    background: white;
     border-color: var(--secondary-font-color);
     transform: translateY(-4px);
 }
@@ -250,7 +250,7 @@
     font-size: 4rem;
     font-weight: 700;
     color: var(--secondary-font-color);
-    opacity: 0.12;
+    opacity: 0.18;
     position: absolute;
     top: 10px;
     right: 16px;
@@ -261,7 +261,7 @@
 .value-card h3 {
     font-family: var(--heading-font);
     font-size: 1.25rem;
-    color: white;
+    color: var(--primary-font-color);
     margin-bottom: 10px;
     letter-spacing: 0.02em;
 }
@@ -269,7 +269,7 @@
 .value-card p {
     font-family: "Raleway", sans-serif;
     font-size: 0.875rem;
-    color: rgba(255,255,255,0.6);
+    color: #555;
     line-height: 1.7;
 }
 

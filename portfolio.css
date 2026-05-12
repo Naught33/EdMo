@@ -183,6 +183,28 @@
     margin-bottom: 14px;
 }
 
+.project-subheading {
+    font-family: var(--heading-font);
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    margin-bottom: 14px;
+}
+
+.project-subheading a {
+    color: var(--secondary-font-color);
+    text-decoration: none;
+    border-bottom: 2px solid rgba(254,111,94,0.35);
+    padding-bottom: 2px;
+    transition: border-color 0.25s ease, color 0.25s ease;
+}
+
+.project-subheading a:hover {
+    border-color: var(--secondary-font-color);
+    color: white;
+}
+
 /* ── Tip/info card ── */
 .project-tips {
     background: rgba(0, 0, 0, 0.55);
