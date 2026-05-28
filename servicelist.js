@@ -49,7 +49,7 @@ export const services = [
         name: "Premium Wood Flooring",
         description: "Expert installation and dustless refinishing of hardwood and specialized wood floors to enhance interior value and aesthetic.",
         category: "Interior Renovations & Finishes",
-        bgUrl: "https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?fm=jpg&q=60&w=3000&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        bgUrl: "https://images.unsplash.com/photo-1548268364-3acee266b695?q=80&w=880&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
         id: "8",
@@ -65,7 +65,7 @@ export const services = [
         name: "Custom Decking & Outdoor Structures",
         description: "Professional repair of framing and installation of functional outdoor spaces using weather-resistant, high-quality timber and composite materials.",
         category: "Outdoor Living & Hardscapes",
-        bgUrl: "https://images.unsplash.com/photo-1588880331179-bc9b93a8cb5e?w=800"
+        bgUrl: "https://images.unsplash.com/photo-1574120583586-de8847ae992c?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
     },
     {
         id: "10",
